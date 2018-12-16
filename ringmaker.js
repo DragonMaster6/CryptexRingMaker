@@ -6,56 +6,44 @@
 var app = new Vue({
   el: '#app',
   data: {
-    secretLength: 1,
-    secretWord: '',
-    cryptexWordCount: 1,
-    cryptexWord: '',
+    cryptexSecretWord: 'bright',
+    cryptexNewWord: '',
     cryptexArray: [],
   },
   created: function() {
     // Initialize cryptex array to have a specified number of words.
-    this.reset();
+    this.resetCryptex();
   },
   methods: {
-    update: function() {
-      // Capitalize the word
-      this.cryptexWord = this.cryptexWord.toUpperCase();
-
-      // Separate each character of the word and insert it into each array
-      // inside the Cryptex array
-      for (var i=0; i<this.secretLength; i++) {
-        this.cryptexArray[i].push(this.cryptexWord[i]);
+    updateCryptex: function() {
+      // Capitalize the new word
+      var newWord = this.cryptexNewWord.toUpperCase();
+      var updatedArray = this.cryptexArray;
+      // Iterate through the new word and append each letter to each array in the cryptex
+      for (var i=0; i<this.cryptexSecretWord.length; i++) {
+        updatedArray[i].push(newWord[i]);
       }
 
-      // Now reset for the next cryptex word.
-      this.cryptexWord = '';
+      // Reset the new word and update the display
+      this.cryptexNewWord = '';
+      // this.$set(this.cryptexArray, updatedArray);
+      this.cryptexArray = updatedArray;
     },
-    reset: function() {
-      // Throw away the built array and re-initialize it
+    resetCryptex: function() {
       this.cryptexArray = [];
-      for (var i=0; i<this.secretLength; i++) {
-        this.cryptexArray.push([]);
+
+      // Populate the cryptexArray with empty arrays equal to the length of the secret word.
+      for (var i=0; i<this.cryptexSecretWord.length; i++) {
+        // If a secret word is present, add the letters to the array
+        this.cryptexArray.push([this.cryptexSecretWord[i].toUpperCase()]);
       }
-      this.cryptexArray = [ [ "B", "W", "F", "F", "S", "A", "A", "U", "L" ], [ "R", "O", "O", "A", "T", "C", "S", "N", "A" ], [ "I", "O", "R", "M", "R", "T", "L", "I", "T" ], [ "G", "D", "M", "O", "O", "U", "E", "T", "T" ], [ "H", "E", "E", "U", "N", "A", "E", "E", "E" ], [ "T", "N", "R", "S", "G", "L", "P", "D", "R" ] ];
-      this.cryptexWord = '';
-      this.secretWord = '';
+
+      // Reset the new word as well
+      this.cryptexNewWord = '';
     },
-    shuffle: function() {
-      // Loop through all the "rings" in the cryptexArray
-      var cryptexCopy = this.cryptexArray;
-      for (var i=0; i<cryptexCopy.length-1; i++) {
-        // Perform a Fisher-Yates shuffle
-        for (var j=cryptexCopy[i].length-1; j>0; j--) {
-          // Retrieve an random index number.
-          var randIndex = Math.floor(Math.random() * (j+1));
-          // hot swap
-          var temp = cryptexCopy[i][j];
-          cryptexCopy[i][j] = cryptexCopy[i][randIndex];
-          cryptexCopy[i][randIndex] = temp;
-        }
-      }
-      this.$set(this.cryptexArray, cryptexCopy);
-      // this.cryptexArray = cryptexCopy;
+    insertWord: function(word) {
+      // NOTE: This function assumes that the word is the same length as the secret word.
+
     }
   }
 });

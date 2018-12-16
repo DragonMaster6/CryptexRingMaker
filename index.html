@@ -18,31 +18,52 @@
       </div>
 
       <div class="card-body">
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text"> Secret word: </span>
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> Secret word: </span>
+            </div>
+            <input type="text" class="form-control" id="cryptex-secret-word"
+              v-model="cryptexSecretWord">
           </div>
-          <input type="text" class="form-control" id="cryptex-secret-word">
         </div>
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text"> New word: </span>
+        <div class="form-group"
+          v-show="cryptexSecretWord.length > 0">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> New word: </span>
+            </div>
+            <input type="text" class="form-control" id="cryptex-new-word"
+              v-model="cryptexNewWord">
           </div>
-          <input type="text" class="form-control" id="cryptex-new-word">
+          <small class="form-text"
+            v-show="cryptexSecretWord.length != cryptexNewWord.length">
+              The new word must be <b>{{cryptexSecretWord.length}}</b> characters long
+          </small>
         </div>
         <div class="form-group">
-          <button class="btn btn-primary"> Update </button>
-          <button class="btn btn-danger"> Reset </button>
+          <button class="btn btn-primary"
+            @click="updateCryptex()"> Update </button>
+          <button class="btn btn-danger"
+            @click="resetCryptex()"> Reset </button>
         </div>
       </div>
     </div>
 
-    <div class="card-body bg-light text-dark">
-      <p class="body-text"> Output </p>
-    </div>
-
-    <div class="cryptex-output-container card bg-light text-black">
-
+    <div class="card-body bg-light text-dark border">
+      <p class="body-text"> Visual Output </p>
+      <table class="table table-sm border">
+        <tr v-for="ring in cryptexArray">
+          <td v-for="(letter, index) in ring"
+            :class="{'bg-info': index==0}">
+            {{ letter }}
+          </td>
+        </tr>
+      </table>
+      <p class="body-text"> Raw JSON: </p>
+      <div class="raw-ring" v-for="ring in cryptexArray">
+        {{ ring }}
+      </div>
     </div>
   </div>
 
