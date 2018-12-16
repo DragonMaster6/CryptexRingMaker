@@ -33,17 +33,34 @@ var app = new Vue({
       this.cryptexArray = [];
 
       // Populate the cryptexArray with empty arrays equal to the length of the secret word.
-      for (var i=0; i<this.cryptexSecretWord.length; i++) {
-        // If a secret word is present, add the letters to the array
-        this.cryptexArray.push([this.cryptexSecretWord[i].toUpperCase()]);
-      }
+      // for (var i=0; i<this.cryptexSecretWord.length; i++) {
+      //   // If a secret word is present, add the letters to the array
+      //   this.cryptexArray.push([this.cryptexSecretWord[i].toUpperCase()]);
+      // }
+      // TODO: Remove this and uncomment the above
+      this.cryptexArray = [ [ "B", "H", "P", "A", "L", "W" ], [ "R", "O", "I", "R", "I", "O" ], [ "I", "N", "R", "T", "V", "O" ], [ "G", "E", "A", "F", "E", "D" ], [ "H", "S", "T", "U", "L", "E" ], [ "T", "T", "E", "L", "Y", "N" ] ];
 
       // Reset the new word as well
       this.cryptexNewWord = '';
     },
-    insertWord: function(word) {
-      // NOTE: This function assumes that the word is the same length as the secret word.
+    shuffleRing: function(index) {
+      // Apply the yates-fisher shuffle while maintaining the secret letter position - aka the first letter.
+      var shuffledRing = this.cryptexArray[index];
 
+      for (var i=shuffledRing.length-1; i > 1; i--){
+        // Add one to the random index to make sure to skip the first letter.
+        var randIndex = Math.floor(Math.random() * i + 1);
+
+        // swap the values now.
+        var temp = shuffledRing[i];
+        shuffledRing[i] = shuffledRing[randIndex];
+        shuffledRing[randIndex] = temp;
+      }
+
+      // Apply the newly shuffled ring to the cryptex array.
+      // this.cryptexArray[index] = shuffledRing;
+      this.$set(this.cryptexArray, index, shuffledRing);
+      // console.log(shuffledRing);
     }
   }
 });

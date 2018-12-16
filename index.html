@@ -53,17 +53,24 @@
     <div class="card-body bg-light text-dark border">
       <p class="body-text"> Visual Output </p>
       <table class="table table-sm border">
-        <tr v-for="ring in cryptexArray">
+        <tr v-for="(ring, rIndex) in cryptexArray">
           <td v-for="(letter, index) in ring"
             :class="{'bg-info': index==0}">
             {{ letter }}
           </td>
+          <td v-show="ring.length > 2">
+            <button class="btn btn-info"
+              @click="shuffleRing(rIndex)"> Shuffle </button>
         </tr>
       </table>
+
       <p class="body-text"> Raw JSON: </p>
-      <div class="raw-ring" v-for="ring in cryptexArray">
-        {{ ring }}
+      <div class="raw-ring" v-for="(ring, index) in cryptexArray">
+        Ring {{index+1}}: {{ ring }}
       </div>
+
+      <p class="body-text"> Export Cryptex Array: </p>
+      {{ cryptexArray }}
     </div>
   </div>
 
