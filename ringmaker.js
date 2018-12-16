@@ -8,6 +8,7 @@ var app = new Vue({
   data: {
     cryptexSecretWord: 'bright',
     cryptexNewWord: '',
+    newWordError: '',
     cryptexArray: [],
   },
   created: function() {
@@ -18,6 +19,31 @@ var app = new Vue({
     updateCryptex: function() {
       // Capitalize the new word
       var newWord = this.cryptexNewWord.toUpperCase();
+
+      // Do some quick validations before inserting the new word.
+      // Check if the field is empty or has incorrect length
+      if (newWord.length != this.cryptexSecretWord.length) {
+        return false;
+      }
+
+      // Check that the new word doesn't conflict with the rings.
+      for (var i=0; i<this.cryptexArray.length; i++) {
+        // console.log(this.cryptexArray[i][0]);
+        if (this.cryptexArray[i][0] == newWord[i]) {
+          console.log("There was an error");
+          this.newWordError = "Ring " + (i+1) + ": Secret letter conflicts with the " + (i+1) + " letter of this word. Please try another.";
+          return;
+        }
+      }
+
+      // If all went well, insert the word into the cryptex.
+      this.insertWord(newWord);
+
+    },
+    insertWord: function(newWord) {
+      // Clear any error messages.
+      this.newWordError = '';
+
       var updatedArray = this.cryptexArray;
       // Iterate through the new word and append each letter to each array in the cryptex
       for (var i=0; i<this.cryptexSecretWord.length; i++) {
@@ -26,7 +52,6 @@ var app = new Vue({
 
       // Reset the new word and update the display
       this.cryptexNewWord = '';
-      // this.$set(this.cryptexArray, updatedArray);
       this.cryptexArray = updatedArray;
     },
     resetCryptex: function() {

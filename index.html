@@ -9,8 +9,8 @@
   </nav>
 
   <div id="app" class="container main-container">
-    <div class="disclaimer">
-      ** Enter explaination here **
+    <div class="alert alert-warning">
+      For an explaination of this tool, see the README file here
     </div>
     <div class="cryptex-input-container card bg-secondary text-white">
       <div class="card-header">
@@ -36,9 +36,13 @@
             <input type="text" class="form-control" id="cryptex-new-word"
               v-model="cryptexNewWord">
           </div>
-          <small class="form-text"
+          <small class="form-text text-warning"
             v-show="cryptexSecretWord.length != cryptexNewWord.length">
               The new word must be <b>{{cryptexSecretWord.length}}</b> characters long
+          </small>
+          <small class="form-text text-warning"
+            v-if="newWordError">
+            {{ newWordError }}
           </small>
         </div>
         <div class="form-group">
