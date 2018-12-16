@@ -7,6 +7,7 @@ var app = new Vue({
   el: '#app',
   data: {
     secretLength: 1,
+    secretWord: '',
     cryptexWordCount: 1,
     cryptexWord: '',
     cryptexArray: [],
@@ -35,7 +36,26 @@ var app = new Vue({
       for (var i=0; i<this.secretLength; i++) {
         this.cryptexArray.push([]);
       }
+      this.cryptexArray = [ [ "B", "W", "F", "F", "S", "A", "A", "U", "L" ], [ "R", "O", "O", "A", "T", "C", "S", "N", "A" ], [ "I", "O", "R", "M", "R", "T", "L", "I", "T" ], [ "G", "D", "M", "O", "O", "U", "E", "T", "T" ], [ "H", "E", "E", "U", "N", "A", "E", "E", "E" ], [ "T", "N", "R", "S", "G", "L", "P", "D", "R" ] ];
       this.cryptexWord = '';
+      this.secretWord = '';
+    },
+    shuffle: function() {
+      // Loop through all the "rings" in the cryptexArray
+      var cryptexCopy = this.cryptexArray;
+      for (var i=0; i<cryptexCopy.length-1; i++) {
+        // Perform a Fisher-Yates shuffle
+        for (var j=cryptexCopy[i].length-1; j>0; j--) {
+          // Retrieve an random index number.
+          var randIndex = Math.floor(Math.random() * (j+1));
+          // hot swap
+          var temp = cryptexCopy[i][j];
+          cryptexCopy[i][j] = cryptexCopy[i][randIndex];
+          cryptexCopy[i][randIndex] = temp;
+        }
+      }
+      this.$set(this.cryptexArray, cryptexCopy);
+      // this.cryptexArray = cryptexCopy;
     }
   }
 });

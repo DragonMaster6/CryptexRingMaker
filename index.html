@@ -13,41 +13,11 @@
       ** Enter explaination here **
     </div>
     <div class="cryptex-input-container card bg-secondary text-white">
-      <div class="card-header">
-        Cryptex Ring Configuration
-      </div>
-      <div class="card-body">
-        <div class="form-group">
-          <label for="cryptex-secret-length"> Enter Secret Length: </label>
-          <input type="text" class="form-control" id="cryptex-secret-length" placeholder="6"
-            v-model="secretLength"
-          >
-        </div>
-        <div class="form-group">
-          <label for="cryptex-word-count"> Enter Number of words to add: </label>
-          <input type="text" class="form-control" id="cryptex-word-count" placeholder="10"
-            v-model="cryptexWordCount"
-          >
-        </div>
-        <div class="form-group">
-          <label for="cryptex-word"> Word to add: </label>
-          <input type="text" class="form-control" id="cryptex-word" placeholder="lively"
-            v-model="cryptexWord"
-          >
-        </div>
-        <div class="form-group">
-          <button class="btn btn-primary"
-            @click="update"> Update </button>
-          <button class="btn btn-danger"
-            @click="reset"> Reset </button>
-        </div>
-      </div>
+
     </div>
 
     <div class="cryptex-output-container card bg-light text-black">
-      <div class="card-body">
-        <p class="card-text"> {{ cryptexArray }}</p>
-      </div>
+      
     </div>
   </div>
 
